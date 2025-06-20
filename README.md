@@ -1,4 +1,4 @@
-# Airbnb Clone – Backend Overview
+# Airbnb Clone – Backend Project
 
 ## Objective
 
@@ -6,113 +6,227 @@ The backend for the Airbnb Clone project is designed to provide a robust and sca
 
 ## Project Goals
 
-- **User Management:** Secure user registration, authentication, and profile management.
-- **Property Management:** Create, update, retrieve, and delete property listings.
-- **Booking System:** Book properties and manage reservation details.
-- **Payment Processing:** Handle transactions securely and record payment data.
-- **Review System:** Enable guests to leave reviews and ratings.
-- **Data Optimization:** Improve performance via indexing and caching.
+- User Management: Secure user registration, authentication, and profile management.
+- Property Management: Create, update, retrieve, and delete property listings.
+- Booking System: Book properties and manage reservation details.
+- Payment Processing: Handle transactions securely and record payment data.
+- Review System: Enable guests to leave reviews and ratings.
+- Data Optimization: Improve performance via indexing and caching.
 
-## Features Overview
-
-### 1. API Documentation
-
-- **OpenAPI Standard:** Backend APIs follow the OpenAPI format for clarity and ease of integration.
-- **Django REST Framework:** Handles CRUD operations for users, properties, bookings, and more.
-- **GraphQL:** Enables flexible and efficient data queries and mutations.
-
-### 2. User Authentication
-
-- **Endpoints:** `/users/`, `/users/{user_id}/`
-- **Features:** User registration, login, and profile management.
-
-### 3. Property Management
-
-- **Endpoints:** `/properties/`, `/properties/{property_id}/`
-- **Features:** Host can create, update, and manage their property listings.
-
-### 4. Booking System
-
-- **Endpoints:** `/bookings/`, `/bookings/{booking_id}/`
-- **Features:** Guests can book listings and manage check-in/check-out dates.
-
-### 5. Payment Processing
-
-- **Endpoints:** `/payments/`
-- **Features:** Processes payments securely for booking confirmations.
-
-### 6. Review System
-
-- **Endpoints:** `/reviews/`, `/reviews/{review_id}/`
-- **Features:** Users can post, edit, and manage reviews of properties.
-
-### 7. Database Optimizations
-
-- **Indexing:** Speed up queries for frequently accessed data.
-- **Caching:** Improve performance and reduce database load using Redis.
-
-## Technology Stack
-
-- **Django:** Python web framework for building backend logic and APIs.
-- **Django REST Framework:** Adds support for RESTful API creation.
-- **PostgreSQL:** Relational database for storing all persistent data.
-- **GraphQL:** Provides efficient and customizable data querying.
-- **Celery:** Manages background tasks like email notifications and payment processing.
-- **Redis:** In-memory data store for caching and queue management.
-- **Docker:** Containerization tool to ensure consistent development and production environments.
-- **CI/CD Pipelines:** Automate build, test, and deployment processes using GitHub Actions.
+---
 
 ## Team Roles
 
-- **Backend Developer:** Implements API endpoints, database models, and business logic.
-- **Database Administrator:** Designs and optimizes the database schema.
-- **DevOps Engineer:** Manages deployment, monitoring, and scalability of services.
-- **QA Engineer:** Ensures backend APIs work as expected through manual and automated testing.
+### Backend Developer
 
-## API Documentation Overview
+Implements API endpoints, business logic, and database schemas. Responsible for ensuring the backend is scalable, secure, and efficient.
 
-- **REST API:** Follows the OpenAPI standard. Covers users, properties, bookings, and payments.
-- **GraphQL API:** Enables advanced querying and mutation operations for flexible client needs.
+### Database Administrator
+
+Designs and optimizes the database structure, ensuring data integrity, efficient queries, and proper indexing.
+
+### DevOps Engineer
+
+Manages deployment pipelines, monitors server performance, sets up Docker environments, and ensures continuous integration and delivery.
+
+### QA Engineer
+
+Tests the backend APIs for bugs, validates functionality, and implements both manual and automated test cases.
+
+---
+
+## Technology Stack
+
+- **Django:** Python web framework for backend logic and REST APIs.
+- **Django REST Framework:** Facilitates RESTful API development.
+- **PostgreSQL:** Relational database for data storage.
+- **GraphQL:** Enables flexible data querying for clients.
+- **Celery:** Manages background tasks like sending emails or processing payments.
+- **Redis:** Used for caching and asynchronous task queues.
+- **Docker:** Ensures consistent development and deployment environments.
+- **GitHub Actions:** Automates testing and deployment workflows.
+
+---
+
+## Database Design
+
+### Users
+
+- `id`: Unique identifier  
+- `name`: Full name  
+- `email`: Unique email address  
+- `password_hash`: Encrypted password  
+- `is_host`: Boolean flag for host role  
+
+**Relationships:**  
+A user can own many properties, make multiple bookings, and write reviews.
+
+### Properties
+
+- `id`: Unique identifier  
+- `owner_id`: References Users  
+- `title`: Name of property  
+- `location`: City or address  
+- `price_per_night`: Cost per night  
+
+**Relationships:**  
+A property belongs to one user (host) and can have many bookings and reviews.
+
+### Bookings
+
+- `id`: Unique identifier  
+- `user_id`: References Users  
+- `property_id`: References Properties  
+- `check_in`: Start date  
+- `check_out`: End date  
+
+**Relationships:**  
+A booking is linked to one user and one property and has one payment.
+
+### Reviews
+
+- `id`: Unique identifier  
+- `user_id`: References Users  
+- `property_id`: References Properties  
+- `rating`: Numerical score  
+- `comment`: Text review  
+
+**Relationships:**  
+A review belongs to one user and one property.
+
+### Payments
+
+- `id`: Unique identifier  
+- `booking_id`: References Bookings  
+- `amount`: Total cost  
+- `status`: Payment status  
+- `payment_method`: e.g., card, PayPal  
+
+**Relationships:**  
+Each payment is associated with one booking.
+
+---
+
+## Feature Breakdown
+
+### User Management
+
+Handles user registration, login, and profile updates. Includes role-based access control to distinguish between guests and hosts.
+
+### Property Management
+
+Enables hosts to create, update, and delete property listings. Guests can browse available properties.
+
+### Booking System
+
+Allows guests to make and manage bookings, ensuring availability is accurately tracked.
+
+### Payment Processing
+
+Integrates secure payment functionality to complete bookings. Tracks transaction history and statuses.
+
+### Reviews and Ratings
+
+Guests can leave feedback and scores for hosts, improving platform trust and transparency.
+
+### Search and Filtering
+
+Allows users to find listings using filters like price, location, and availability.
+
+### Admin Panel (Optional)
+
+Enables admin users to manage users, properties, bookings, and flag violations.
+
+---
+
+## API Security
+
+### Authentication
+
+Token-based authentication (e.g., JWT) ensures only verified users can access protected resources.
+
+### Authorization
+
+Role-based access restricts actions like listing properties or modifying data to authorized users only.
+
+### Data Encryption
+
+Sensitive data is encrypted in transit and at rest, safeguarding user credentials and payment data.
+
+### Rate Limiting
+
+Limits request frequency to prevent abuse and brute-force attacks.
+
+### Input Validation
+
+All user inputs are sanitized to defend against SQL injection and XSS vulnerabilities.
+
+### Secure Payments
+
+Payments are processed using third-party gateways that comply with security standards like PCI-DSS.
+
+---
+
+## CI/CD Pipeline
+
+CI/CD pipelines automate the build, test, and deployment processes, ensuring quick and reliable updates to the project.
+
+### Benefits
+
+- Reduces deployment errors  
+- Improves testing and feedback speed  
+- Ensures consistent production builds  
+
+### Tools Used
+
+- **GitHub Actions:** Automates workflows for testing and deployment.
+- **Docker:** Containers for building isolated and reproducible environments.
+- **Docker Compose:** Manages multi-container applications.
+- **Gunicorn + Nginx:** Deployment stack for production-ready services.
+
+---
 
 ## Endpoints Overview
 
 ### Users
 
 - `GET /users/` – List all users  
-- `POST /users/` – Register a new user  
-- `GET /users/{user_id}/` – Get user profile  
+- `POST /users/` – Register user  
+- `GET /users/{user_id}/` – Retrieve user  
 - `PUT /users/{user_id}/` – Update user  
 - `DELETE /users/{user_id}/` – Delete user  
 
 ### Properties
 
-- `GET /properties/` – List all properties  
-- `POST /properties/` – Create a new property  
-- `GET /properties/{property_id}/` – Get property details  
+- `GET /properties/` – List properties  
+- `POST /properties/` – Create property  
+- `GET /properties/{property_id}/` – Retrieve property  
 - `PUT /properties/{property_id}/` – Update property  
 - `DELETE /properties/{property_id}/` – Delete property  
 
 ### Bookings
 
-- `GET /bookings/` – List all bookings  
-- `POST /bookings/` – Create a booking  
-- `GET /bookings/{booking_id}/` – View booking details  
+- `GET /bookings/` – List bookings  
+- `POST /bookings/` – Create booking  
+- `GET /bookings/{booking_id}/` – View booking  
 - `PUT /bookings/{booking_id}/` – Update booking  
 - `DELETE /bookings/{booking_id}/` – Cancel booking  
 
 ### Payments
 
-- `POST /payments/` – Process a payment for a booking  
+- `POST /payments/` – Process payment  
 
 ### Reviews
 
-- `GET /reviews/` – List all reviews  
-- `POST /reviews/` – Submit a review  
-- `GET /reviews/{review_id}/` – View a review  
+- `GET /reviews/` – List reviews  
+- `POST /reviews/` – Create review  
+- `GET /reviews/{review_id}/` – View review  
 - `PUT /reviews/{review_id}/` – Update review  
 - `DELETE /reviews/{review_id}/` – Delete review  
 
+---
+
 ## Additional Resources
 
-- System design architecture for hotel booking apps
-- Software development team structure
+- System design patterns for booking applications  
+- Software development team structure references  
