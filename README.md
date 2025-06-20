@@ -145,7 +145,6 @@ A production-grade web server and reverse proxy used to serve static assets and 
 
 A Python WSGI server used to run the Django app in production, handling incoming HTTP requests.
 
-
 ## Database Design
 
 The database for the Airbnb Clone Project is designed to reflect real-world booking platform relationships. Below are the key entities, their important fields, and how they relate to one another.
@@ -251,27 +250,64 @@ Represents payment information for a booking.
 Below is an overview of the main features implemented in the Airbnb Clone Project. Each feature contributes to the platform's overall functionality, user experience, and business logic.
 
 ### User Management
+
 Handles user registration, login, authentication, and profile management. It distinguishes between guests and hosts and secures user data through hashed passwords and token-based authentication.
 
 ### Property Management
+
 Allows hosts to list, update, and delete properties. Each property includes information such as title, description, location, images, and pricing, enabling users to browse available accommodations.
 
 ### Booking System
+
 Enables guests to book available properties for specific dates. It manages availability, prevents double-bookings, and tracks reservation status throughout the check-in and check-out process.
 
 ### Payment Processing
+
 Integrates a secure payment system that handles transactions for bookings. It ensures each payment is linked to a booking and supports tracking of payment status and methods.
 
 ### Reviews and Ratings
+
 Allows guests to leave reviews and ratings for properties after their stay. This feedback system enhances trust and transparency between guests and hosts.
 
 ### Search and Filtering
+
 Provides users with the ability to search for properties based on criteria such as location, date, price, and amenities. This improves user experience by narrowing results to relevant listings.
 
 ### Admin Panel (Optional)
+
 Offers administrative functionality to manage users, properties, and bookings. Useful for moderation, platform maintenance, and resolving disputes.
 
-
-
-
 ---
+
+## API Security
+
+Security is a fundamental aspect of the Airbnb Clone Project, especially as it handles sensitive user data, financial transactions, and account activities. The following key security measures will be implemented:
+
+### Authentication
+
+We use token-based authentication (e.g., JWT) to ensure only verified users can access protected endpoints. Authentication is essential for protecting user sessions and preventing unauthorized access to personal data.
+
+### Authorization
+
+Role-based access control (RBAC) will be enforced to differentiate permissions between guests, hosts, and admins. This prevents users from accessing or modifying resources they do not own (e.g., a guest editing a host’s property listing).
+
+### Data Encryption
+
+All sensitive data, including passwords and payment details, will be encrypted both in transit (via HTTPS) and at rest (using hashing and encryption algorithms). This protects against data breaches and unauthorized data exposure.
+
+### Rate Limiting & Throttling
+
+APIs will be protected against abuse through rate limiting and throttling. This prevents brute-force attacks, reduces server load, and helps mitigate denial-of-service (DoS) threats.
+
+### Input Validation & Sanitization
+
+All user input will be validated and sanitized to prevent common web vulnerabilities such as SQL injection and cross-site scripting (XSS). This ensures application integrity and protects against malicious data payloads.
+
+### Secure Payment Processing
+
+Integration with secure third-party payment gateways will ensure financial transactions are handled in a PCI-DSS compliant manner. This protects users from fraud and financial data theft.
+
+### Error Handling & Logging
+
+Sensitive system errors will not be exposed to clients. Instead, secure logging will be implemented to monitor suspicious activities while maintaining system transparency for developers and administrators.
+
