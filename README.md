@@ -146,5 +146,132 @@ A production-grade web server and reverse proxy used to serve static assets and 
 A Python WSGI server used to run the Django app in production, handling incoming HTTP requests.
 
 
+## Database Design
+
+The database for the Airbnb Clone Project is designed to reflect real-world booking platform relationships. Below are the key entities, their important fields, and how they relate to one another.
+
+### 1. Users
+
+Represents people using the platform, including hosts and guests.
+
+**Key Fields:**
+
+- `id`: Unique identifier
+- `name`: Full name of the user
+- `email`: Email address (unique)
+- `password_hash`: Encrypted password
+- `is_host`: Boolean to indicate if the user can list properties
+
+**Relationships:**
+
+- A user can own multiple properties (if they are a host)
+- A user can make multiple bookings
+- A user can write multiple reviews
+
+---
+
+### 2. Properties
+
+Represents a home or apartment listed by a host.
+
+**Key Fields:**
+
+- `id`: Unique identifier
+- `owner_id`: References the `Users` table
+- `title`: Name of the property
+- `description`: Detailed information about the property
+- `location`: Address or city where the property is located
+- `price_per_night`: Nightly rate
+
+**Relationships:**
+
+- A property belongs to one user (host)
+- A property can have many bookings
+- A property can have many reviews
+
+---
+
+### 3. Bookings
+
+Represents a reservation made by a guest.
+
+**Key Fields:**
+
+- `id`: Unique identifier
+- `user_id`: References the guest from the `Users` table
+- `property_id`: References the property being booked
+- `check_in`: Start date of the booking
+- `check_out`: End date of the booking
+
+**Relationships:**
+
+- A booking belongs to one user (guest)
+- A booking belongs to one property
+- A booking can have one payment
+
+---
+
+### 4. Reviews
+
+Represents feedback left by a guest after staying at a property.
+
+**Key Fields:**
+
+- `id`: Unique identifier
+- `user_id`: References the guest who left the review
+- `property_id`: References the reviewed property
+- `rating`: Numerical score (e.g., 1 to 5)
+- `comment`: Textual review content
+
+**Relationships:**
+
+- A review belongs to one user
+- A review belongs to one property
+
+---
+
+### 5. Payments
+
+Represents payment information for a booking.
+
+**Key Fields:**
+
+- `id`: Unique identifier
+- `booking_id`: References the associated booking
+- `amount`: Total payment amount
+- `status`: Payment status (e.g., pending, completed)
+- `payment_method`: Method used (e.g., card, PayPal)
+
+**Relationships:**
+
+- A payment is linked to one booking
+
+## Feature Breakdown
+
+Below is an overview of the main features implemented in the Airbnb Clone Project. Each feature contributes to the platform's overall functionality, user experience, and business logic.
+
+### User Management
+Handles user registration, login, authentication, and profile management. It distinguishes between guests and hosts and secures user data through hashed passwords and token-based authentication.
+
+### Property Management
+Allows hosts to list, update, and delete properties. Each property includes information such as title, description, location, images, and pricing, enabling users to browse available accommodations.
+
+### Booking System
+Enables guests to book available properties for specific dates. It manages availability, prevents double-bookings, and tracks reservation status throughout the check-in and check-out process.
+
+### Payment Processing
+Integrates a secure payment system that handles transactions for bookings. It ensures each payment is linked to a booking and supports tracking of payment status and methods.
+
+### Reviews and Ratings
+Allows guests to leave reviews and ratings for properties after their stay. This feedback system enhances trust and transparency between guests and hosts.
+
+### Search and Filtering
+Provides users with the ability to search for properties based on criteria such as location, date, price, and amenities. This improves user experience by narrowing results to relevant listings.
+
+### Admin Panel (Optional)
+Offers administrative functionality to manage users, properties, and bookings. Useful for moderation, platform maintenance, and resolving disputes.
+
+
+
 
 ---
