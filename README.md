@@ -311,3 +311,23 @@ Integration with secure third-party payment gateways will ensure financial trans
 
 Sensitive system errors will not be exposed to clients. Instead, secure logging will be implemented to monitor suspicious activities while maintaining system transparency for developers and administrators.
 
+## CI/CD Pipeline
+
+Continuous Integration and Continuous Deployment (CI/CD) pipelines are automated workflows that streamline the process of building, testing, and deploying code. In this project, CI/CD ensures that every change made to the codebase is automatically tested and deployed to staging or production environments with minimal manual intervention.
+
+### Why CI/CD Is Important
+
+- **Faster Development:** Automated builds and tests reduce delays between code submission and deployment.
+- **Improved Code Quality:** Frequent testing helps catch bugs early in the development cycle.
+- **Consistent Deployments:** Automation reduces human error and ensures predictable releases.
+- **Team Collaboration:** Teams can integrate and deliver code more confidently and frequently.
+
+### Tools Used
+
+- **GitHub Actions:** Automates the CI/CD workflows for testing, building, and deploying the project directly from the GitHub repository.
+- **Docker:** Containerizes the application to ensure consistent environments across development, testing, and production.
+- **Docker Compose:** Orchestrates multi-container setups for backend, database, and services during integration testing.
+- **Nginx & Gunicorn:** Serve as the production-ready deployment stack.
+- **Optional:** Integration with cloud platforms like Heroku, AWS, or DigitalOcean for hosting and environment management.
+
+---
