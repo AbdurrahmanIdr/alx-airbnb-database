@@ -1,14 +1,7 @@
-# Task 0: Define Entities and Relationships in ER Diagram
+# Entities and Attributes
 
-## 📘 Overview
+## 1. **User**
 
-This document outlines the Entity-Relationship Diagram (ERD) for an Airbnb-like application. It identifies key entities, their attributes, and the relationships between them to guide database schema design for a scalable and normalized system.
-
----
-
-## 🧩 Entities and Attributes
-
-### 1. **User**
 - `user_id` (UUID, Primary Key, Indexed)
 - `first_name` (VARCHAR, NOT NULL)
 - `last_name` (VARCHAR, NOT NULL)
@@ -18,7 +11,8 @@ This document outlines the Entity-Relationship Diagram (ERD) for an Airbnb-like 
 - `role` (ENUM: guest, host, admin, NOT NULL)
 - `created_at` (TIMESTAMP, DEFAULT CURRENT_TIMESTAMP)
 
-### 2. **Property**
+## 2. **Property**
+
 - `property_id` (UUID, Primary Key, Indexed)
 - `host_id` (Foreign Key → User.user_id)
 - `name` (VARCHAR, NOT NULL)
@@ -28,7 +22,8 @@ This document outlines the Entity-Relationship Diagram (ERD) for an Airbnb-like 
 - `created_at` (TIMESTAMP, DEFAULT CURRENT_TIMESTAMP)
 - `updated_at` (TIMESTAMP, ON UPDATE CURRENT_TIMESTAMP)
 
-### 3. **Booking**
+## 3. **Booking**
+
 - `booking_id` (UUID, Primary Key, Indexed)
 - `property_id` (Foreign Key → Property.property_id)
 - `user_id` (Foreign Key → User.user_id)
@@ -38,14 +33,16 @@ This document outlines the Entity-Relationship Diagram (ERD) for an Airbnb-like 
 - `status` (ENUM: pending, confirmed, canceled, NOT NULL)
 - `created_at` (TIMESTAMP, DEFAULT CURRENT_TIMESTAMP)
 
-### 4. **Payment**
+## 4. **Payment**
+
 - `payment_id` (UUID, Primary Key, Indexed)
 - `booking_id` (Foreign Key → Booking.booking_id)
 - `amount` (DECIMAL, NOT NULL)
 - `payment_date` (TIMESTAMP, DEFAULT CURRENT_TIMESTAMP)
 - `payment_method` (ENUM: credit_card, paypal, stripe, NOT NULL)
 
-### 5. **Review**
+## 5. **Review**
+
 - `review_id` (UUID, Primary Key, Indexed)
 - `property_id` (Foreign Key → Property.property_id)
 - `user_id` (Foreign Key → User.user_id)
@@ -53,7 +50,8 @@ This document outlines the Entity-Relationship Diagram (ERD) for an Airbnb-like 
 - `comment` (TEXT, NOT NULL)
 - `created_at` (TIMESTAMP, DEFAULT CURRENT_TIMESTAMP)
 
-### 6. **Message**
+## 6. **Message**
+
 - `message_id` (UUID, Primary Key, Indexed)
 - `sender_id` (Foreign Key → User.user_id)
 - `recipient_id` (Foreign Key → User.user_id)
@@ -62,7 +60,7 @@ This document outlines the Entity-Relationship Diagram (ERD) for an Airbnb-like 
 
 ---
 
-## 🔗 Relationships
+## Relationships
 
 | Relationship                    | Type         |
 |---------------------------------|--------------|
@@ -78,7 +76,7 @@ This document outlines the Entity-Relationship Diagram (ERD) for an Airbnb-like 
 
 ---
 
-## 🗂 Indexing & Constraints
+## Indexing & Constraints
 
 - **Primary Keys**: Indexed automatically.
 - **Unique Index**: `User.email`
@@ -94,9 +92,8 @@ This document outlines the Entity-Relationship Diagram (ERD) for an Airbnb-like 
 
 ---
 
-## 📊 ER Diagram
+## ER Diagram
 
 ![ERD](./erd.png)
 
 The diagram above visualizes all entities and their relationships based on the specification.
-
