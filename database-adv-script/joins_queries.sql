@@ -1,4 +1,4 @@
--- Active: 1752787685050@@127.0.0.1@5432@airbnb
+-- 1. INNER JOIN: Retrieve all bookings and the respective users who made them
 SELECT
     b.booking_id,
     b.property_id,
@@ -13,6 +13,7 @@ SELECT
 FROM booking b
 INNER JOIN "user" u ON b.user_id = u.user_id;
 
+-- 2. LEFT JOIN: Retrieve all properties and their reviews, including properties with no reviews
 SELECT
     p.property_id,
     p.name AS property_name,
@@ -22,6 +23,7 @@ SELECT
 FROM property p
 LEFT JOIN review r ON p.property_id = r.property_id;
 
+-- 3. FULL OUTER JOIN: Retrieve all users and all bookings (even unmatched ones)
 SELECT
     u.user_id,
     u.first_name,
