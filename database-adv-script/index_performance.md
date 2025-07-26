@@ -1,11 +1,13 @@
 # Index Optimization Report
 
 ## Objective
+
 Improve the performance of queries on high-usage columns using indexes.
 
 ---
 
 ## Indexed Columns
+
 We created indexes on the following columns:
 
 | Table     | Column        | Reason for Indexing             |
@@ -63,9 +65,3 @@ FROM property_count;
 
 * Execution Time: **\~0.094 ms**
 * Index scan used: `idx_booking_property_id`, `idx_property_property_id`
-
----
-
-### Conclusion
-
-The use of indexes on primary join and filtering columns reduced query times by **70–80%**, especially for aggregation and ranking queries.
